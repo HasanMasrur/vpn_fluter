@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
 
-import '../main.dart';
-
 //card to represent status in home screen
 class HomeCard extends StatelessWidget {
   final String title, subtitle;
@@ -16,7 +14,7 @@ class HomeCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SizedBox(
-        width: mq.width * .45,
+        width: 45,
         child: Column(
           children: [
             //icon

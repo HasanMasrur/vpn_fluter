@@ -1,5 +1,5 @@
-import 'package:b2c_mobile_app/constants/widgets/app_loader.dart';
 import 'package:flutter/material.dart';
+import 'package:vpn_basic_project/constants/widgets/app_loader.dart';
 
 loader(BuildContext context) {
   showDialog(

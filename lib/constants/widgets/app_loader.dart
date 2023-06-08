@@ -1,5 +1,3 @@
-import 'package:b2c_mobile_app/constants/assets/resources.dart';
-import 'package:b2c_mobile_app/constants/theme/app_colors.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 
@@ -71,7 +69,7 @@ class AppLoaderState extends State<AppLoader> {
           //   ),
           // ),
           Image.asset(
-            R.ASSETS_IMAGES_FINAL_BDESH_LOGO_3_PNG,
+            '',
             height: widget.height,
             width: widget.width,
           )
@@ -86,7 +84,7 @@ class AppLoaderState extends State<AppLoader> {
               width: widget.width,
               // child: Lottie.asset(R.ASSETS_LOTTIES_LOADER_ROUNDER_JSON),
               child: const CircularProgressIndicator(
-                color: AppColors.purpleDark,
+                color: Colors.red,
                 strokeWidth: 1,
               ),
             ),

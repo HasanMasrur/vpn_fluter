@@ -14,11 +14,9 @@ dependencies:
   flutter:
     sdk: flutter
   # Getx for state management
-  get: ^4.6.5
-  # Cupertino style icons
+
   cupertino_icons: ^1.0.2
   # For API Call
-  http: ^1.0.0
   # Converting CSV data to List
   csv: ^5.0.2
   # For Lottie Animation
@@ -32,6 +30,8 @@ dependencies:
   flutter_animate: ^4.0.0
   flutter_screenutil: ^5.8.4
   bloc: ^8.1.0
+  flutter_native_splash: ^2.2.16
+  flutter_bloc: ^8.1.3
 
 
 dev_dependencies:

@@ -1,6 +1,6 @@
-import 'package:b2c_mobile_app/config/app_configuration.dart';
 // ignore: depend_on_referenced_packages
 import 'package:path/path.dart' as p;
+import 'package:vpn_basic_project/config/app_configuration.dart';
 
 class ApiEndPoints {
   // Avoid self instance
