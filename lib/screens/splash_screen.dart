@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:vpn_basic_project/constants/assets/app_assets.dart';
-import 'package:vpn_basic_project/screens/home_screen.dart';
+import 'package:vpn_basic_project/features/home_screen/presentation/pages/home_screen.dart';
 
 class SplashScreen extends StatefulWidget {
   const SplashScreen({super.key});

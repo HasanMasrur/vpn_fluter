@@ -233,7 +233,6 @@ class _HomeScreenState extends State<HomeScreen> {
         button: true,
         child: InkWell(
           onTap: () {},
-          //() => Get.to(() => LocationScreen()),
           child: Container(
               color: Color(0xff00adb5),
               padding: EdgeInsets.symmetric(horizontal: 04),
