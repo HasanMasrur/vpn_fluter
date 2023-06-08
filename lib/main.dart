@@ -1,12 +1,12 @@
 // ignore_for_file: depend_on_referenced_packages
 
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_native_splash/flutter_native_splash.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:vpn_basic_project/config/app_configuration.dart';
 import 'package:vpn_basic_project/core/app_route/on_generate_router.dart';
+
+import 'features/home_screen/presentation/bloc/home_bloc/home_bloc.dart';
 
 Future<void> main() async {
   // WidgetsBinding widgetsBinding = WidgetsFlutterBinding.ensureInitialized();
@@ -24,32 +24,29 @@ class MyApp extends StatelessWidget {
     //   DeviceOrientation.portraitUp,
     //   DeviceOrientation.portraitDown,
     // ]);
-    return
+    return MultiBlocProvider(
+      providers: [
+        BlocProvider<HomeBloc>(
+          create: (context) => HomeBloc(),
+        ),
+      ],
+      child: ScreenUtilInit(
+        designSize: const Size(375, 812),
+        minTextAdapt: true,
+        splitScreenMode: true,
+        builder: (context, child) {
+          // final mediaQuery = MediaQuery.of(context);
 
-        // MultiBlocProvider(
-        //   providers: [
-
-        //     // Provider<MultiCurrencyApiStore>(create: (_) => MultiCurrencyApiStore()),
-        //   ],
-        //   child:
-
-        ScreenUtilInit(
-      designSize: const Size(375, 812),
-      minTextAdapt: true,
-      splitScreenMode: true,
-      builder: (context, child) {
-        // final mediaQuery = MediaQuery.of(context);
-
-        return MaterialApp(
-          debugShowCheckedModeBanner: false,
-          title: AppConfiguration.appName,
-          onGenerateRoute: RouteGenerator().onGenerateRoute,
-          themeMode: ThemeMode.light,
-          // theme: AppTheme.lightTheme(),
-          // darkTheme: AppTheme.darkTheme(),
-        );
-      },
-      //  ),
+          return MaterialApp(
+            debugShowCheckedModeBanner: false,
+            title: AppConfiguration.appName,
+            onGenerateRoute: RouteGenerator().onGenerateRoute,
+            themeMode: ThemeMode.light,
+            // theme: AppTheme.lightTheme(),
+            // darkTheme: AppTheme.darkTheme(),
+          );
+        },
+      ),
     );
   }
 }

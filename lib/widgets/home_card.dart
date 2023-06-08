@@ -14,7 +14,7 @@ class HomeCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SizedBox(
-        width: 45,
+        width: 80,
         child: Column(
           children: [
             //icon

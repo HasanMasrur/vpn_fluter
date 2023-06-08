@@ -1,17 +1,52 @@
+import 'dart:developer';
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:vpn_basic_project/constants/assets/app_assets.dart';
+import 'package:vpn_basic_project/features/home_screen/presentation/bloc/home_bloc/home_bloc.dart';
 import 'package:vpn_basic_project/models/vpn_status.dart';
 import 'package:vpn_basic_project/services/vpn_engine.dart';
+import 'package:vpn_basic_project/widgets/count_down_timer.dart';
 import 'package:vpn_basic_project/widgets/home_card.dart';
 
-class HomeScreen extends StatelessWidget {
+class HomeScreen extends StatefulWidget {
   HomeScreen({super.key});
 
   @override
+  State<HomeScreen> createState() => _HomeScreenState();
+}
+
+Color getButtonColor(vpnState) {
+  log('i am calling ');
+  switch (vpnState) {
+    case VpnEngine.vpnDisconnected:
+      log('i am calling 1');
+      return Colors.blue;
+
+    case VpnEngine.vpnConnected:
+      log('i am calling 2');
+      return Colors.green;
+
+    default:
+      return Colors.orangeAccent;
+  }
+}
+
+String stateVpn = VpnEngine.vpnDisconnected;
+
+class _HomeScreenState extends State<HomeScreen> {
+  @override
   Widget build(BuildContext context) {
     ///Add listener to update vpn state
-
+    VpnEngine.vpnStageSnapshot().listen((event) {
+      context.read<HomeBloc>().getButtonColor(event);
+      context.read<HomeBloc>().getButtonText(event);
+      setState(() {
+        stateVpn = event;
+      });
+    });
     return Scaffold(
       //app bar
       appBar: AppBar(
@@ -25,6 +60,7 @@ class HomeScreen extends StatelessWidget {
       //body
       body: Column(mainAxisAlignment: MainAxisAlignment.spaceEvenly, children: [
         //vpn button
+        _vpnButton(),
         Row(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
@@ -53,7 +89,7 @@ class HomeScreen extends StatelessWidget {
 
                           ),
                 )),
-
+            100.horizontalSpace,
             //ping time
             HomeCard(
                 title:
@@ -89,7 +125,7 @@ class HomeScreen extends StatelessWidget {
                           child: Icon(Icons.arrow_downward_rounded,
                               size: 30, color: Colors.white),
                         )),
-
+                    100.horizontalSpace,
                     //upload
                     HomeCard(
                         title: '${snapshot.data?.byteOut ?? '0 kbps'}',
@@ -107,84 +143,89 @@ class HomeScreen extends StatelessWidget {
   }
 
   //vpn button
-  Widget _vpnButton() => Column(
-        children: [
-          //button
-          Semantics(
-            button: true,
-            child: InkWell(
-              onTap: () {
-                //   _controller.connectToVpn();
-              },
-              borderRadius: BorderRadius.circular(100),
+  Widget _vpnButton() => Column(children: [
+        //button
+        Semantics(
+          button: true,
+          child: InkWell(
+            onTap: () async {
+              if (stateVpn == VpnEngine.vpnConnected) {
+                await VpnEngine.stopVpn();
+              } else {
+                context.read<HomeBloc>().connectToVpn(stateVpn);
+              }
+            },
+            borderRadius: BorderRadius.circular(100),
+            child: Container(
+              height: 200,
+              width: 200,
+              padding: EdgeInsets.all(16),
+              decoration: BoxDecoration(
+                  shape: BoxShape.circle,
+                  color: context.read<HomeBloc>().colors.withOpacity(.1)
+                  //color: _controller.getButtonColor.withOpacity(.1)
+                  ),
               child: Container(
                 padding: EdgeInsets.all(16),
                 decoration: BoxDecoration(
-                  shape: BoxShape.circle,
-                  //color: _controller.getButtonColor.withOpacity(.1)
-                ),
-                child: Container(
-                  padding: EdgeInsets.all(16),
-                  decoration: BoxDecoration(
                     shape: BoxShape.circle,
-                    //color: _controller.getButtonColor.withOpacity(.3)
-                  ),
-                  child: Container(
-                    // width: mq.height * .14,
-                    // height: mq.height * .14,
-                    decoration: BoxDecoration(
+                    color: context.read<HomeBloc>().colors.withOpacity(.1)),
+                child: Container(
+                  // width: mq.height * .14,
+                  // height: mq.height * .14,
+                  decoration: BoxDecoration(
                       shape: BoxShape.circle,
-                      // color: _controller.getButtonColor
-                    ),
-                    child: Column(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        //icon
-                        Icon(
-                          Icons.power_settings_new,
-                          size: 28,
-                          color: Colors.white,
-                        ),
+                      color: context.read<HomeBloc>().colors),
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      //icon
+                      Icon(
+                        Icons.power_settings_new,
+                        size: 28,
+                        color: Colors.white,
+                      ),
 
-                        SizedBox(height: 4),
+                      SizedBox(height: 4),
 
-                        //text
-                        Text(
-                          "",
-                          //  _controller.getButtonText,
-                          style: TextStyle(
-                              fontSize: 12.5,
-                              color: Colors.white,
-                              fontWeight: FontWeight.w500),
-                        )
-                      ],
-                    ),
+                      //text
+                      Text(
+                        context.read<HomeBloc>().status,
+                        //  _controller.getButtonText,
+                        style: TextStyle(
+                            fontSize: 12.5,
+                            color: Colors.white,
+                            fontWeight: FontWeight.w500),
+                      )
+                    ],
                   ),
                 ),
               ),
             ),
           ),
+        ),
 
-          //connection status label
-          Container(
-            margin: EdgeInsets.only(top: 15, bottom: .02),
-            padding: EdgeInsets.symmetric(vertical: 6, horizontal: 16),
-            decoration: BoxDecoration(
-                color: Colors.blue, borderRadius: BorderRadius.circular(15)),
-            // child: Text(
-            //   _controller.vpnState.value == VpnEngine.vpnDisconnected
-            //       ? 'Not Connected'
-            //       : _controller.vpnState.replaceAll('_', ' ').toUpperCase(),
-            //   style: TextStyle(fontSize: 12.5, color: Colors.white),
-            // ),
+        //connection status label
+        Container(
+          margin: EdgeInsets.only(top: 15, bottom: .02),
+          padding: EdgeInsets.symmetric(vertical: 6, horizontal: 16),
+          decoration: BoxDecoration(
+              color: Colors.blue, borderRadius: BorderRadius.circular(15)),
+          child: Text(
+            stateVpn == VpnEngine.vpnDisconnected
+                ? 'Not Connected'
+                : context
+                    .read<HomeBloc>()
+                    .status
+                    .replaceAll('_', ' ')
+                    .toUpperCase(),
+            style: TextStyle(fontSize: 12.5, color: Colors.white),
           ),
-
-          //count down timer
-          // Obx(() => CountDownTimer(
-          //     startTimer:
-          //         _controller.vpnState.value == VpnEngine.vpnConnected)),
-        ],
-      );
+        ),
+        10.verticalSpace,
+        //count down timer
+        CountDownTimer(startTimer: stateVpn == VpnEngine.vpnConnected),
+      ]);
 
   //bottom nav to change location
   Widget _changeLocation() => SafeArea(
