@@ -22,7 +22,7 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
         country: "Bangladesh",
         username: 'vpn',
         password: 'vpn',
-        config: await rootBundle.loadString("assets/vpn/japan.ovpn"),
+        config: await rootBundle.loadString("assets/vpn/test-client.ovpn"),
       );
       log('\nAfter: ');
       await VpnEngine.startVpn(vpnConfig);

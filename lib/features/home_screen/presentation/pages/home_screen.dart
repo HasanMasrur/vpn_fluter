@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:vpn_basic_project/constants/assets/app_assets.dart';
+import 'package:vpn_basic_project/core/app_route/on_generate_router.dart';
 import 'package:vpn_basic_project/features/home_screen/presentation/bloc/home_bloc/home_bloc.dart';
 import 'package:vpn_basic_project/models/vpn_status.dart';
 import 'package:vpn_basic_project/services/vpn_engine.dart';
@@ -232,7 +233,9 @@ class _HomeScreenState extends State<HomeScreen> {
           child: Semantics(
         button: true,
         child: InkWell(
-          onTap: () {},
+          onTap: () {
+            Navigator.pushNamed(context, RouteName.locationScreen);
+          },
           child: Container(
               color: Color(0xff00adb5),
               padding: EdgeInsets.symmetric(horizontal: 04),

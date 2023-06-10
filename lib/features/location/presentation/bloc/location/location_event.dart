@@ -1,20 +1,14 @@
-// part of 'profile_update_bloc.dart';
+import 'package:equatable/equatable.dart';
 
-// abstract class ProfileUpdateEvent extends Equatable {
-//   const ProfileUpdateEvent();
+abstract class LocationEvent extends Equatable {
+  const LocationEvent();
 
-//   @override
-//   List<Object> get props => [];
-// }
+  @override
+  List<Object> get props => [];
+}
 
-// class ProfileUpdateReqEvent extends ProfileUpdateEvent {
-//   final ProfileUpdateUC profileUpdateRepo;
-//   final BuildContext context;
-
-//   const ProfileUpdateReqEvent({
-//     required this.profileUpdateRepo,
-//     required this.context,
-//   });
-//   @override
-//   List<Object> get props => [profileUpdateRepo, context];
-// }
+class LocationReqEvent extends LocationEvent {
+  const LocationReqEvent();
+  @override
+  List<Object> get props => [];
+}

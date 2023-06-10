@@ -1,32 +1,33 @@
-// part of 'profile_update_bloc.dart';
+import 'package:equatable/equatable.dart';
+import 'package:vpn_basic_project/features/location/domain/use_case/location_uc.dart';
 
-// abstract class ProfileUpdateState extends Equatable {
-//   const ProfileUpdateState();
+abstract class LocationState extends Equatable {
+  const LocationState();
 
-//   @override
-//   List<Object> get props => [];
-// }
+  @override
+  List<Object> get props => [];
+}
 
-// class ProfileUpdateAPIdle extends ProfileUpdateState {}
+class LocationAPIdle extends LocationState {}
 
-// class ProfileUpdateAPLoading extends ProfileUpdateState {}
+class LocationAPLoading extends LocationState {}
 
-// class ProfileUpdateAPISuccess extends ProfileUpdateState {
-//   // final UserInfo? userInfo;
-//   final UserInfo userInfo;
-//   const ProfileUpdateAPISuccess({
-//     // this.userInfo,
-//     required this.userInfo,
-//   });
-//   @override
-//   List<Object> get props => [userInfo];
-// }
+class LocationAPISuccess extends LocationState {
+  // final UserInfo? userInfo;
+  final List<VpnUc> vpnUcList;
+  const LocationAPISuccess({
+    // this.userInfo,
+    required this.vpnUcList,
+  });
+  @override
+  List<Object> get props => [vpnUcList];
+}
 
-// class ProfileUpdateAPIFailure extends ProfileUpdateState {
-//   final String message;
-//   const ProfileUpdateAPIFailure({
-//     required this.message,
-//   });
-//   @override
-//   List<Object> get props => [];
-// }
+class LocationAPIFailure extends LocationState {
+  final String message;
+  const LocationAPIFailure({
+    required this.message,
+  });
+  @override
+  List<Object> get props => [];
+}

@@ -1,23 +1,20 @@
 import 'dart:async';
 import 'dart:developer';
-
 import 'package:csv/csv.dart';
 import 'package:dartz/dartz.dart';
-import 'package:dio/dio.dart' as dio;
-import 'package:vpn_basic_project/core/api/api_endpoint.dart';
 import 'package:vpn_basic_project/core/api/api_provider.dart';
 import 'package:vpn_basic_project/features/location/domain/use_case/location_uc.dart';
 
-class ProfileUpdateRepo {
-  ProfileUpdateRepo._();
+class LocationRepo {
+  LocationRepo._();
 
-  static Future<Either<String, VpnUc?>> profileUpdateRepo() async {
+  static Future<Either<String, List<VpnUc>>> locationRepoCall() async {
     log('=' * 100);
     log(
       "//www.vpngate.net/api/iphone/",
       sequenceNumber: 0,
       level: 0,
-      name: "profileupdateRepo.postCall",
+      name: "LocationRepo.postCall",
       zone: Zone.current,
       error: "Passing Data : ",
     );
@@ -66,11 +63,11 @@ class ProfileUpdateRepo {
             }
             vpnList.add(VpnUc.fromJson(tempJson));
           }
-          return Right(userInfo);
+          return Right(vpnList);
         } catch (e) {
           log("", error: Error.safeToString(e.toString()));
           log('=' * 100);
-          return const Right(null);
+          return const Left("Something were problem");
         }
       });
     });

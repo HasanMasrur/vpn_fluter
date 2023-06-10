@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:vpn_basic_project/features/location/presentation/pages/location_screen.dart';
 import 'package:vpn_basic_project/screens/splash_screen.dart';
 
 class RouteGenerator {
@@ -18,17 +19,12 @@ class RouteGenerator {
           settings: settings,
         );
 
-      // case RouteName.dashboard:
-      //   final args = settings.arguments as int?;
-      //   if (args != null) {
-      //     return MaterialPageRoute(
-      //       builder: (BuildContext context) => DashboardScreen(
-      //         activeIndex: args,
-      //       ),
-      //       settings: settings,
-      //     );
-      //  }
-      // return _errorRoute();
+      case RouteName.locationScreen:
+        return MaterialPageRoute(
+          builder: (BuildContext context) => LocationScreen(),
+          settings: settings,
+        );
+
       default:
         return _errorRoute(); // Return null for unknown routes
     }
@@ -94,6 +90,7 @@ class RouteName {
   // static final instance = NameRoute._();
   static const String root = "/";
   static const String serviceSelector = "/serviceSelector";
+  static const String locationScreen = "locationScreen";
 
   //
 }

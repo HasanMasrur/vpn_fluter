@@ -5,6 +5,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:vpn_basic_project/config/app_configuration.dart';
 import 'package:vpn_basic_project/core/app_route/on_generate_router.dart';
+import 'package:vpn_basic_project/features/location/presentation/bloc/location/location_bloc.dart';
 
 import 'features/home_screen/presentation/bloc/home_bloc/home_bloc.dart';
 
@@ -28,6 +29,9 @@ class MyApp extends StatelessWidget {
       providers: [
         BlocProvider<HomeBloc>(
           create: (context) => HomeBloc(),
+        ),
+        BlocProvider<LocationBloc>(
+          create: (context) => LocationBloc(),
         ),
       ],
       child: ScreenUtilInit(
